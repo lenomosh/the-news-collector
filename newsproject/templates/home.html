@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+		<!-- section -->
+		<div class="section">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+					<!-- post -->
+                    {% for article in top_headlines[:3] %}
+					<div class="col-md-6">
+						<div class="post post-thumb">
+							<a class="post-img" target="_blank" href="{{ article['url'] }}"><img src="{{ article['urlToImage'] }}" alt=""></a>
+							<div class="post-body">
+								<div class="post-meta">
+									<a class="post-category cat-2" href="#"> {{ article['source']['name'] }}</a>
+									<span class="post-date">{{ article['publishedAt'] }}</span>
+								</div>
+								<h3 class="post-title"><a target="_blank"  href="{{ article['url'] }}">{{ article['title'] }}</a></h3>
+							</div>
+						</div>
+					</div>
+					<!-- /post -->
+                    {% endfor %}
+
+				</div>
+				<!-- /row -->
+
+				<!-- row -->
+				<div class="row">
+					<div class="col-md-12">
+						<div class="section-title">
+							<h2>Business News</h2>
+						</div>
+					</div>
+                    {% for article in business_news[:6] %}
+                    <!-- post -->
+					<div class="col-md-4">
+						<div class="post">
+							<a class="post-img" target="_blank" href="{{ article['url'] }}"><img src="{{ article['urlToImage'] }}" alt=""></a>
+							<div class="post-body">
+								<div class="post-meta">
+									<a class="post-category cat-1" href="#">{{ article['source']['name'] }}</a>
+									<span class="post-date">{{ article['publishedAt'] }}</span>
+								</div>
+								<h3 class="post-title"><a target="_blank" href="{{ article['url'] }}">{{ article['title'] }}</a></h3>
+							</div>
+						</div>
+					</div>
+                    {% endfor %}
+				</div>
+				<!-- /row -->
+
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /section -->
+
+		<!-- section -->
+		<div class="section section-grey">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+					<div class="col-md-12">
+						<div class="section-title text-center">
+							<h2>Sports Posts</h2>
+						</div>
+					</div>
+
+					<!-- post -->
+                    {% for article in sports_news[:6] %}
+					<div class="col-md-4">
+						<div class="post">
+							<a class="post-img" target="_blank" href="{{ article['url'] }}"><img src="{{ article['urlToImage'] }}" alt=""></a>
+							<div class="post-body">
+								<div class="post-meta">
+									<a class="post-category cat-2" href="#">{{ article['source']['name'] }}</a>
+									<span class="post-date">{{ article['publishedAt'] }}</span>
+								</div>
+								<h3 class="post-title"><a target="_blank" href="{{ article['url'] }}">{{ article['title'] }}</a></h3>
+							</div>
+						</div>
+					</div>
+                    {% endfor %}
+					<!-- /post -->
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /section -->
+
+		<!-- section -->
+		<div class="section">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+					<div class="col-md-8">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="section-title">
+									<h2>Most Read</h2>
+								</div>
+							</div>
+							<!-- post -->
+							{% for article in health_news[:5] %}
+                            <div class="col-md-12">
+						<div class="post post-row">
+							<a class="post-img" target="_blank" href="{{ article['url'] }}"><img src="{{ article['urlToImage'] }}" alt=""></a>
+							<div class="post-body">
+								<div class="post-meta">
+									<a class="post-category cat-2" href="#">{{ article['source']['name'] }}</a>
+									<span class="post-date">{{ article['publishedAt'] }}</span>
+								</div>
+								<h3 class="post-title"><a target="_blank" href="{{ article['url'] }}">{{ article['title'] }}</a></h3>
+                                <p>{{ article['description'] }}</p>
+
+							</div>
+						</div>
+					</div>
+                            {% endfor %}
+
+
+{#							<div class="col-md-12">#}
+{#								<div class="section-row">#}
+{#									<button class="primary-button center-block">Load More</button>#}
+{#								</div>#}
+{#							</div>#}
+						</div>
+					</div>
+
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /section -->
+
+{% endblock %}
