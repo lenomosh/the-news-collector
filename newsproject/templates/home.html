@@ -83,10 +83,7 @@
 							<div class="post-body">
 								<div class="post-meta">
 									<a class="post-category cat-2" href="#">{{ article['source']['name'] }}</a>
-									<span class="post-date">
-                                                                    <script>formatDate({{ article['publishedAT'] }})</script>
-
-                                    </span>
+									<span class="post-date date">{{ article['publishedAt'] }}</span>
 								</div>
 								<h3 class="post-title"><a target="_blank" href="{{ article['url'] }}">{{ article['title'] }}</a></h3>
 							</div>
