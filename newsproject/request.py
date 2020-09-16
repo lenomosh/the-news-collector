@@ -8,7 +8,6 @@ class News:
     news_api = NewsApiClient(api_key=app.config.get('API_KEY'))
 
     def get_top_headlines(self, category=None, country='us', **kwargs):
-        # print(**kwargs)
         top_headlines: dict
         if category is None:
             top_headlines = self.news_api.get_top_headlines(**kwargs)
