@@ -8,6 +8,7 @@ class Config:
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'data.sqlite')
     SECRET_KEY = 'MURTREDSCXCsretyuio9'
 
+
 class ProdConfig(Config):
     DEBUG = False
 
