@@ -1,5 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+<header>
+    <script>
+    const formatDate = date =>{
+        const newDate = new Date(date)
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        return  newDate.toLocaleString(undefined,options)
+    }
+    </script>
+</header>
 <body>
 
 <!-- Header -->
@@ -79,11 +88,7 @@
 <script src="../static/js/bootstrap.min.js"></script>
 <script src="../static/js/main.js"></script>
 <script>
-    const formatDate = date =>{
-        const newDate = new Date(date)
-        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        return  newDate.toLocaleString(undefined,options)
-    }
+
     {#formatDate('2020-08-21T21:45:11Z')#}
      const searchNews  = async event=> {
         event.preventDefault()
@@ -121,6 +126,13 @@ ${data}
         `
 
     }
+    window.addEventListener('load',event=>{
+        const allDates = document.querySelectorAll('.date')
+        Array.from(allDates).map(node=>{
+            const value = node.innerText
+            node.innerText = formatDate(value)
+        })
+    })
 </script>
 
 </body>
