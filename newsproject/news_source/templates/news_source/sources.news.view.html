@@ -1,8 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-
     <div class="container">
-
         {% for article in articles %}
             <div class="col-md-12">
                 <div class="post post-row">
@@ -14,11 +12,9 @@
                         </div>
                         <h3 class="post-title"><a href="{{ article.url }}">{{ article.title }}</a></h3>
                         <p>{{ article.description }}</p>
-
                     </div>
                 </div>
             </div>
         {% endfor %}
     </div>
-
 {% endblock %}
