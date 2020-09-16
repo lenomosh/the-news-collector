@@ -4,7 +4,6 @@ from newsproject.models import Article,Source
 
 
 class News:
-    url = "https://newsapi.org/v2/top-headlines?country=us&apiKey=fe0577b9a2f64260a0f3286c2467bff2"
     news_api = NewsApiClient(api_key=app.config.get('API_KEY'))
 
     def get_top_headlines(self, category=None, country='us', **kwargs):
