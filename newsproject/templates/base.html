@@ -47,6 +47,7 @@
 <!-- /Header -->
 
 <div id="result">
+
     {%  block content %}
 
     {% endblock %}
@@ -78,10 +79,16 @@
 <script src="../static/js/bootstrap.min.js"></script>
 <script src="../static/js/main.js"></script>
 <script>
-    async function searchNews (event) {
+    const formatDate = date =>{
+        const newDate = new Date(date)
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        return  newDate.toLocaleString(undefined,options)
+    }
+    {#formatDate('2020-08-21T21:45:11Z')#}
+     const searchNews  = async event=> {
         event.preventDefault()
         const container = document.getElementById('result')
-        container.innerHTML = `<div id="loader"/> <span>Loading</span>`
+        container.innerHTML = `<div id="loader"></div> <span><h1>Loading</h1></span>`
         const form  = new FormData(document.getElementById('form'))
         const url =window.location.protocol+"//"+ window.location.host+"{{ url_for('search') }}"
         const  response = await fetch(url,{
@@ -89,24 +96,29 @@
             body:form
         })
         const result = await response.json()
-        container.innerHTML = result.articles.map(article=>
-            `
-            <div class="col-md-12">
+        const data = result.articles.map(article=>
+           ` <div class="col-md-12">
                 <div class="post post-row">
-                    <a class="post-img" href="${ article.url }"><img src="${ article.urlToImage }" alt=""></a>
+                    <a class="post-img" href="${article.url}"><img src="${article.urlToImage}" alt=""></a>
                     <div class="post-body">
                         <div class="post-meta">
-                            <a class="post-category cat-2" href="#">${ article.source.name }}</a>
-                            <span class="post-date">${ article.publishedAt }</span>
+                            <a class="post-category cat-2" href="#">${article.source.name}</a>
+                            <span class="post-date">${formatDate(article.publishedAt)}</span>
                         </div>
-                        <h3 class="post-title"><a href="${ article.url }">${ article.title }</a></h3>
-                        <p>${ article.description }</p>
-
+                        <h3 class="post-title"><a href="${article.url}">${article.title}</a></h3>
+                        <p>${article.description}</p>
                     </div>
                 </div>
-            </div>`)
+            </div>`
+)
+        container.innerHTML = `
+        <div class="container">
+            <h1><b>${result.articles.length}</b> results found</h1>
+<div class="divider"></div>
+${data}
 
-        console.log(result)
+</div>
+        `
 
     }
 </script>
