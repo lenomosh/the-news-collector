@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+    <div class="row">
+    {% for source in sources %}
+        <div class="col-sm-4 p-4">
+        <div class="card">
+            <div class="card-header">
+                <a href="{{ url_for('news_source.source_articles',name=source["id"]) }}">{{ source['name'] }}</a>
+
+            </div>
+            <div class="card-body">
+                <div class="blockquote">
+                    <p>{{ source['description'] }}</p>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <a class="post-category cat-2" href="#"> {{ source['category'] }}</a>
+
+                    </div>
+                    <div class="col-sm-6">
+                        <p>{{ source['country'] }}</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        </div>
+
+    {% endfor %}
+    </div>
+    </div>
+
+{% endblock %}

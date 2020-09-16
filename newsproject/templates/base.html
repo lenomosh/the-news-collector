@@ -1,6 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
+<body>
+
+<!-- Header -->
+<header id="header">
+    <!-- Nav -->
+    <div id="nav" class="navbar navbar-expand-lg navbar-light bg-light">
+        <!-- Main Nav -->
+        <div id="nav-fixed">
+            <div class="container">
+
+                <!-- nav -->
+                <ul class="nav-menu navbar-nav navbar-nav mr-auto">
+                    <li><a href="{{ url_for('index') }}">Home</a></li>
+                    <li  class="cat-4"><a href="{{ url_for('news_article.article_category',category='health') }}">Health</a></li>
+                    <li class="cat-1"><a  href="{{ url_for('news_article.article_category',category='sports') }}">Sports</a></li>
+                    <li class="cat-2"><a  href="{{ url_for('news_article.article_category',category='business') }}">Business</a></li>
+                    <li class="cat-3"><a  href="{{ url_for('news_article.article_category',category='technology') }}">Technology</a></li>
+                    <li class="cat-4"><a  href="{{ url_for('news_article.article_category',category='science') }}">Science</a></li>
+                    <li class="cat-4"><a  href="{{ url_for('news_source.index') }}">Our  News Sources</a></li>
+                </ul>
+                <!-- /nav -->
+
+                <!-- search & aside toggle -->
+                <div class="nav-btns">
+                    <button class="search-btn"><i class="fa fa-search"></i> Search</button>
+                    <div class="search-form">
+                        <form id="form"
+                              onsubmit="return searchNews(event)"
+                                {#                                      method="post"#}
+                                {#                                      action="{{ url_for('search') }}"#}
+                              class="search-form">
+                            <input class="search-input" type="text" name="search" placeholder="Enter Your Search ...">
+
+
+                        </form>
+                        <button class="search-close"><i class="fa fa-times"></i> Close</button>
+                    </div>
+                </div>
+                <!-- /search & aside toggle -->
+            </div>
+        </div>
+    </div>
+    <!-- /Nav -->
+</header>
+<!-- /Header -->
+
+<div id="result">
+    {%  block content %}
+
+    {% endblock %}
+</div>
+<!-- Footer -->
+<footer id="footer">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="footer-widget m-auto">
+                    <div class="footer-copyright">
+								<span>&copy;
+                                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> </span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</footer>
+<!-- /Footer -->
+
+<!-- jQuery Plugins -->
+<script src="../static/js/jquery.min.js"></script>
+<script src="../static/js/bootstrap.min.js"></script>
+<script src="../static/js/main.js"></script>
+<script>
+    async function searchNews (event) {
+        event.preventDefault()
+        const container = document.getElementById('result')
+        container.innerHTML = `<div id="loader"/> <span>Loading</span>`
+        const form  = new FormData(document.getElementById('form'))
+        const url =window.location.protocol+"//"+ window.location.host+"{{ url_for('search') }}"
+        const  response = await fetch(url,{
+            method:'POST',
+            body:form
+        })
+        const result = await response.json()
+        container.innerHTML = result.articles.map(article=>
+            `
+            <div class="col-md-12">
+                <div class="post post-row">
+                    <a class="post-img" href="${ article.url }"><img src="${ article.urlToImage }" alt=""></a>
+                    <div class="post-body">
+                        <div class="post-meta">
+                            <a class="post-category cat-2" href="#">${ article.source.name }}</a>
+                            <span class="post-date">${ article.publishedAt }</span>
+                        </div>
+                        <h3 class="post-title"><a href="${ article.url }">${ article.title }</a></h3>
+                        <p>${ article.description }</p>
+
+                    </div>
+                </div>
+            </div>`)
+
+        console.log(result)
+
+    }
+</script>
+
+</body>
+<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -28,127 +140,4 @@
 		<![endif]-->
 
     </head>
-	<body>
-
-		<!-- Header -->
-		<header id="header">
-			<!-- Nav -->
-			<div id="nav">
-				<!-- Main Nav -->
-				<div id="nav-fixed">
-					<div class="container">
-
-						<!-- nav -->
-						<ul class="nav-menu nav navbar-nav">
-							<li><a href="{{ url_for('index') }}">Home</a></li>
-							<li  class="cat-4"><a href="{{ url_for('news_article.article_category',category='health') }}">Health</a></li>
-							<li class="cat-1"><a  href="{{ url_for('news_article.article_category',category='sports') }}">Sports</a></li>
-							<li class="cat-2"><a  href="{{ url_for('news_article.article_category',category='business') }}">Business</a></li>
-							<li class="cat-3"><a  href="{{ url_for('news_article.article_category',category='technology') }}">Technology</a></li>
-							<li class="cat-4"><a  href="{{ url_for('news_article.article_category',category='science') }}">Science</a></li>
-						</ul>
-						<!-- /nav -->
-
-						<!-- search & aside toggle -->
-						<div class="nav-btns">
-							<button class="search-btn"><i class="fa fa-search"></i></button>
-							<div class="search-form">
-								<input class="search-input" type="text" name="search" placeholder="Enter Your Search ...">
-								<button class="search-close"><i class="fa fa-times"></i></button>
-							</div>
-						</div>
-						<!-- /search & aside toggle -->
-					</div>
-				</div>
-				<!-- /Main Nav -->
-
-				<!-- Aside Nav -->
-				<!-- Aside Nav -->
-			</div>
-			<!-- /Nav -->
-		</header>
-		<!-- /Header -->
-        {%  block content %}
-
-        {% endblock %}
-		<!-- Footer -->
-		<footer id="footer">
-			<!-- container -->
-			<div class="container">
-				<!-- row -->
-				<div class="row">
-					<div class="col-md-5">
-						<div class="footer-widget">
-							<div class="footer-logo">
-								<a href="index.html" class="logo"><img src="./img/logo.png" alt=""></a>
-							</div>
-							<ul class="footer-nav">
-								<li><a href="#">Privacy Policy</a></li>
-								<li><a href="#">Advertisement</a></li>
-							</ul>
-							<div class="footer-copyright">
-								<span>&copy; <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></span>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-md-4">
-						<div class="row">
-							<div class="col-md-6">
-								<div class="footer-widget">
-									<h3 class="footer-title">About Us</h3>
-									<ul class="footer-links">
-										<li><a href="about.html">About Us</a></li>
-										<li><a href="#">Join Us</a></li>
-										<li><a href="contact.html">Contacts</a></li>
-									</ul>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="footer-widget">
-									<h3 class="footer-title">Catagories</h3>
-									<ul class="footer-links">
-										<li><a href="category.html">Web Design</a></li>
-										<li><a href="category.html">JavaScript</a></li>
-										<li><a href="category.html">Css</a></li>
-										<li><a href="category.html">Jquery</a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-md-3">
-						<div class="footer-widget">
-							<h3 class="footer-title">Join our Newsletter</h3>
-							<div class="footer-newsletter">
-								<form>
-									<input class="input" type="email" name="newsletter" placeholder="Enter your email">
-									<button class="newsletter-btn"><i class="fa fa-paper-plane"></i></button>
-								</form>
-							</div>
-							<ul class="footer-social">
-								<li><a href="#"><i class="fa fa-facebook"></i></a></li>
-								<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-								<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-								<li><a href="#"><i class="fa fa-pinterest"></i></a></li>
-							</ul>
-						</div>
-					</div>
-
-				</div>
-				<!-- /row -->
-			</div>
-			<!-- /container -->
-		</footer>
-		<!-- /Footer -->
-
-		<!-- jQuery Plugins -->
-		<script src="../static/js/jquery.min.js"></script>
-		<script src="../static/js/bootstrap.min.js"></script>
-		<script src="../static/js/main.js"></script>
-
-	</body>
 </html>
